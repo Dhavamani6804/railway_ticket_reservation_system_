@@ -3,11 +3,11 @@ import java.util.*;
 
 public class TicketBooker {
 
-    static int availableLowerBerths = 12;
-    static int availableMiddleBerths = 12;
-    static int availableUpperBerths = 12;
-    static int availableRacTickets = 3;
-    static int availableWaitingList = 2;
+    static int availableLowerBerths = 1;
+    static int availableMiddleBerths = 1;
+    static int availableUpperBerths = 1;
+    static int availableRacTickets =1;
+    static int availableWaitingList = 1;
 
     static Queue<Integer> waitingList = new LinkedList<>();
     static Queue<Integer> racList = new LinkedList<>();
@@ -117,7 +117,7 @@ public class TicketBooker {
             racPositions.add(passengerFromRAC.number);
             availableRacTickets++;
 
-            App.bookTicket(passengerFromRAC);
+
             bookTicket(passengerFromRAC, berthNumber, allotedBerth);
 
             if (!waitingList.isEmpty()) {
@@ -130,7 +130,7 @@ public class TicketBooker {
                 racList.add(wlPassengerId);
                 availableWaitingList++;
                 availableRacTickets--;
-                waitingListPositions.add(passengerFromWL.number);
+                waitingListPositions.add(positionBooked);
                 System.out.println("Passenger " + passengerFromWL.name + " moved from WL to RAC.");
             }
         }

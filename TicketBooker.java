@@ -3,6 +3,17 @@ import java.util.*;
 
 public class TicketBooker {
 
+    private static TicketBooker instance = null;
+
+    private TicketBooker(){}
+
+    public static TicketBooker getInstance(){
+        if(instance==null){
+            instance = new TicketBooker();
+        }
+        return instance;
+    }
+
     static int availableLowerBerths = 1;
     static int availableMiddleBerths = 1;
     static int availableUpperBerths = 1;

@@ -4,7 +4,7 @@ import java.util.*;
 public class App {
 
     public static void bookTicket(Passenger p) {
-        TicketBooker booker = new TicketBooker();
+        TicketBooker booker = TicketBooker.getInstance();
         if (TicketBooker.availableWaitingList == 0) {
             System.out.println("No Tickets Available");
             return;
@@ -62,7 +62,7 @@ public class App {
     }
 
     public static void cancelTicket(int id) {
-        TicketBooker booker = new TicketBooker();
+        TicketBooker booker = TicketBooker.getInstance();
         if (!booker.passengers.containsKey(id)) {
             System.out.println("Passenger detail Unknown");
         } else {
@@ -102,12 +102,12 @@ public class App {
                 }
                 break;
                 case 3: {
-                    TicketBooker booker = new TicketBooker();
+                    TicketBooker booker = TicketBooker.getInstance();
                     booker.printAvailable();
                 }
                 break;
                 case 4: {
-                    TicketBooker booker = new TicketBooker();
+                    TicketBooker booker = TicketBooker.getInstance();
                     booker.printPassengers();
                 }
                 break;

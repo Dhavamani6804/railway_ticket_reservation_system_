@@ -90,7 +90,6 @@ public class TicketBooker {
 
         int positionBooked = p.number;
 
-        // Free up the berth
         if (p.alloted.equals("L")) {
             availableLowerBerths++;
             lowerBerthsPositions.add(positionBooked);
@@ -110,8 +109,21 @@ public class TicketBooker {
 
             int berthNumber = -1;
             String allotedBerth = "";
+            String pref = passengerFromRAC.berthPreference;
 
-            if (availableLowerBerths > 0) {
+            if(pref.equals("L")&&availableLowerBerths>0){
+                berthNumber = lowerBerthsPositions.remove(0);
+                availableLowerBerths--;
+                allotedBerth = "L";
+            } else if (pref.equals("M")&&availableMiddleBerths>0) {
+                berthNumber = middleBerthsPositions.remove(0);
+                availableMiddleBerths--;
+                allotedBerth = "M";
+            } else if (pref.equals("U")&&availableUpperBerths>0) {
+                berthNumber = upperBerthsPositions.remove(0);
+                availableUpperBerths--;
+                allotedBerth = "U";
+            } else if (availableLowerBerths > 0) {
                 berthNumber = lowerBerthsPositions.remove(0);
                 availableLowerBerths--;
                 allotedBerth = "L";
@@ -141,7 +153,7 @@ public class TicketBooker {
                 racList.add(wlPassengerId);
                 availableWaitingList++;
                 availableRacTickets--;
-                waitingListPositions.add(positionBooked);
+                waitingListPositions.add(passengerFromWL.number);
                 System.out.println("Passenger " + passengerFromWL.name + " moved from WL to RAC.");
             }
         }

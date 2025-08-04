@@ -23,6 +23,8 @@ public class TicketBooker {
     static Queue<Integer> waitingList = new LinkedList<>();
     static Queue<Integer> racList = new LinkedList<>();
     static List<Integer> bookedTicketList = new ArrayList<>();
+    List<Passenger> confirmedList = new ArrayList<>();
+
 
     static List<Integer> lowerBerthsPositions = new ArrayList<>(Arrays.asList());
     static List<Integer> middleBerthsPositions = new ArrayList<>(Arrays.asList());
@@ -55,6 +57,8 @@ public class TicketBooker {
         p.alloted = allotedBerth;
         passengers.put(p.passengerId, p);
         bookedTicketList.add(p.passengerId);
+        confirmedList.add(p);
+
         System.out.println(".......Booked Successfully.......");
     }
 
@@ -87,6 +91,7 @@ public class TicketBooker {
 
         passengers.remove(passengerId);
         bookedTicketList.remove(Integer.valueOf(passengerId));
+        confirmedList.remove(p);
 
         int positionBooked = p.number;
 
@@ -158,6 +163,37 @@ public class TicketBooker {
             }
         }
     }
+
+    public void printCurrentStatus() {
+        System.out.println("\n=== Current Reservation Status ===");
+
+        System.out.println("\nConfirmed Bookings:");
+        for (Passenger p : confirmedList) {
+            System.out.println("Passenger ID: " + p.passengerId +
+                    ", Name: " + p.name +
+                    ", Age: " + p.age +
+                    ", Berth: " + p.alloted + p.number);
+        }
+
+        System.out.println("\nAvailable Berths:");
+        System.out.println("Lower Berths: " + availableLowerBerths);
+        System.out.println("Middle Berths: " + availableMiddleBerths);
+        System.out.println("Upper Berths: " + availableUpperBerths);
+
+        System.out.println("\nRAC Queue:");
+        for (Integer id : racList) {
+            Passenger p = passengers.get(id);
+            System.out.println("Passenger ID: " + p.passengerId + ", Name: " + p.name + ", Age: " + p.age);
+        }
+
+        System.out.println("\nWaiting List:");
+        for (Integer id : waitingList) {
+            Passenger p = passengers.get(id);
+            System.out.println("Passenger ID: " + p.passengerId + ", Name: " + p.name + ", Age: " + p.age);
+        }
+
+    }
+
 
     public void printAvailable() {
         System.out.println("--------------------------");

@@ -74,7 +74,7 @@ public class App {
         Scanner s = new Scanner(System.in);
         boolean loop = true;
         while (loop) {
-            System.out.println(" 1. Book Ticket \n 2. Cancel Ticket \n 3. Available Tickets \n 4. Booked Tickets \n 5. Exit");
+            System.out.println(" 1. Book Ticket \n 2. Cancel Ticket \n 3. Available Tickets \n 4. Booked Tickets\n 5. View Current Reservation Status\n 6. Exit");
             int choice = s.nextInt();
             switch (choice) {
                 case 1: {
@@ -112,9 +112,12 @@ public class App {
                 }
                 break;
                 case 5: {
-                    loop = false;
+                    TicketBooker.getInstance().printCurrentStatus();
                 }
                 break;
+                case 6:{
+                    loop = false;
+                }
                 default:
                     break;
             }

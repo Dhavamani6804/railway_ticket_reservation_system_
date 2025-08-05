@@ -23,14 +23,14 @@ public class TicketBooker {
     static Queue<Integer> waitingList = new LinkedList<>();
     static Queue<Integer> racList = new LinkedList<>();
     static List<Integer> bookedTicketList = new ArrayList<>();
-    List<Passenger> confirmedList = new ArrayList<>();
+    static List<Passenger> confirmedList = new ArrayList<>();
 
 
-    static List<Integer> lowerBerthsPositions = new ArrayList<>(Arrays.asList());
-    static List<Integer> middleBerthsPositions = new ArrayList<>(Arrays.asList());
-    static List<Integer> upperBerthsPositions = new ArrayList<>(Arrays.asList());
-    static List<Integer> racPositions = new ArrayList<>(Arrays.asList());
-    static List<Integer> waitingListPositions = new ArrayList<>(Arrays.asList());
+    static List<Integer> lowerBerthsPositions = new ArrayList<>(Arrays.asList(1));
+    static List<Integer> middleBerthsPositions = new ArrayList<>(Arrays.asList(1));
+    static List<Integer> upperBerthsPositions = new ArrayList<>(Arrays.asList(1));
+    static List<Integer> racPositions = new ArrayList<>(Arrays.asList(1));
+    static List<Integer> waitingListPositions = new ArrayList<>(Arrays.asList(1));
 
     static {
         for (int i = 1; i <= availableLowerBerths; i++) {
@@ -114,21 +114,8 @@ public class TicketBooker {
 
             int berthNumber = -1;
             String allotedBerth = "";
-            String pref = passengerFromRAC.berthPreference;
 
-            if(pref.equals("L")&&availableLowerBerths>0){
-                berthNumber = lowerBerthsPositions.remove(0);
-                availableLowerBerths--;
-                allotedBerth = "L";
-            } else if (pref.equals("M")&&availableMiddleBerths>0) {
-                berthNumber = middleBerthsPositions.remove(0);
-                availableMiddleBerths--;
-                allotedBerth = "M";
-            } else if (pref.equals("U")&&availableUpperBerths>0) {
-                berthNumber = upperBerthsPositions.remove(0);
-                availableUpperBerths--;
-                allotedBerth = "U";
-            } else if (availableLowerBerths > 0) {
+            if (availableLowerBerths > 0) {
                 berthNumber = lowerBerthsPositions.remove(0);
                 availableLowerBerths--;
                 allotedBerth = "L";
@@ -145,24 +132,34 @@ public class TicketBooker {
             racPositions.add(passengerFromRAC.number);
             availableRacTickets++;
 
+            passengerFromRAC.number = berthNumber;
+            passengerFromRAC.alloted = allotedBerth;
 
-            bookTicket(passengerFromRAC, berthNumber, allotedBerth);
+            bookedTicketList.add(racPassengerId);
+            confirmedList.add(passengerFromRAC);
+
+            System.out.println("Passenger ID " + racPassengerId + " moved from RAC to confirmed berth: " + allotedBerth + berthNumber);
 
             if (!waitingList.isEmpty()) {
-                int wlPassengerId = waitingList.poll();
-                Passenger passengerFromWL = passengers.get(wlPassengerId);
+                int waitingPassengerId = waitingList.poll();
+                Passenger passengerFromWL = passengers.get(waitingPassengerId);
 
                 int racPos = racPositions.remove(0);
+                availableRacTickets--;
+
                 passengerFromWL.number = racPos;
                 passengerFromWL.alloted = "RAC";
-                racList.add(wlPassengerId);
-                availableWaitingList++;
-                availableRacTickets--;
+
+                racList.add(waitingPassengerId);
+                System.out.println("Passenger ID " + waitingPassengerId + " moved from Waiting List to RAC: RAC" + racPos);
+
                 waitingListPositions.add(passengerFromWL.number);
-                System.out.println("Passenger " + passengerFromWL.name + " moved from WL to RAC.");
+                availableWaitingList++;
             }
         }
+
     }
+
 
     public void printCurrentStatus() {
         System.out.println("\n=== Current Reservation Status ===");

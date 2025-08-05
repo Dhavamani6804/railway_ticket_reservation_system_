@@ -79,22 +79,35 @@ public class App {
             switch (choice) {
                 case 1: {
                     System.out.println("Enter the number of passengers to book : ");
-                    int seets = s.nextInt();
-                    if (seets <= 0) {
+                    int seats = s.nextInt();
+
+                    if (seats <= 0) {
                         System.out.println("Invalid number of passengers");
                         break;
-                    } else {
-                        for (int i = 0; i < seets; i++) {
-                            System.out.println("Enter Passenger name,age and berth preference (L,M or U)");
-                            String name = s.next();
-                            int age = s.nextInt();
-                            String berthPreference = s.next();
-                            Passenger p = new Passenger(name, age, berthPreference);
-                            bookTicket(p);
-                        }
                     }
+
+                    for (int i = 0; i < seats; i++) {
+
+                        if (TicketBooker.availableLowerBerths == 0 &&
+                                TicketBooker.availableMiddleBerths == 0 &&
+                                TicketBooker.availableUpperBerths == 0 &&
+                                TicketBooker.availableRacTickets == 0 &&
+                                TicketBooker.availableWaitingList == 0) {
+
+                            System.out.println("No Tickets Available (All Confirmed, RAC, and Waiting List slots are full).");
+                            break;  // exit the booking loop early
+                        }
+
+                        System.out.println("Enter Passenger name, age and berth preference (L, M or U):");
+                        String name = s.next();
+                        int age = s.nextInt();
+                        String berthPreference = s.next();
+
+                        Passenger p = new Passenger(name, age, berthPreference);
+                        bookTicket(p);
+                    }
+                    break;
                 }
-                break;
                 case 2: {
                     System.out.println("Enter passenger Id to cancel");
                     int id = s.nextInt();

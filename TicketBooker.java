@@ -181,15 +181,17 @@ public class TicketBooker {
         System.out.println("Upper Berths: " + availableUpperBerths);
 
         System.out.println("\nRAC Queue:");
-        for (Integer id : racList) {
+        for (int id : racList) {
             Passenger p = passengers.get(id);
-            System.out.println("Passenger ID: " + p.passengerId + ", Name: " + p.name + ", Age: " + p.age);
+            if (p != null)
+                System.out.println("Passenger ID: " + p.passengerId + ", Name: " + p.name + ", Age: " + p.age);
         }
 
         System.out.println("\nWaiting List:");
-        for (Integer id : waitingList) {
+        for (int id : waitingList) {
             Passenger p = passengers.get(id);
-            System.out.println("Passenger ID: " + p.passengerId + ", Name: " + p.name + ", Age: " + p.age);
+            if (p != null)
+                System.out.println("Passenger ID: " + p.passengerId + ", Name: " + p.name + ", Age: " + p.age);
         }
 
     }
